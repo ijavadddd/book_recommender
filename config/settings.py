@@ -134,13 +134,17 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTHENTICATION_BACKENDS = [
+    'apps.account.backends.CustomUserBackend',
+]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-    ]
+        'apps.account.backends.CustomAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_PAGINATION_CLASS': "apps.utils.StandardPagination",
 }
 
-AUTHENTICATION_BACKENDS = [
-    'apps.account.authentications.CustomUserBackend',
-]
