@@ -3,5 +3,5 @@ from apps.account.api.views import LoginAPIView
 
 
 urlpatterns = [
-    path('login', LoginAPIView.as_view(), name='login'),
+    path('login/', LoginAPIView.as_view(), name='login'),
 ]

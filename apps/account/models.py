@@ -1,4 +1,5 @@
 from django.db import connection
+from hashlib import sha256
 
 
 class User:
@@ -24,3 +25,10 @@ class User:
             if row:
                 return User(id=row[0], username=row[1], password=row[2])
             return None
+
+    def __hash__(self):
+        combined = self.username + self.password
+        return int(sha256(combined.encode('utf-8')).hexdigest(), 16)
+
+    def __str__(self):
+        return self.username
