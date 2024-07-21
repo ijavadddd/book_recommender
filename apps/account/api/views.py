@@ -27,9 +27,8 @@ class LoginAPIView(APIView):
             if user is not None:
                 # Successful authentication
                 request.session['user'] = {'id': user.id, 'key': hash(user)}
-                print(hash(user))
                 # 1 hour user will be login
-                request.session.set_expiry = 60 * 60
+                request.session.set_expiry(60 * 60)
 
                 return Response({"message": "Successfully logged in"}, status=status.HTTP_200_OK)
             else:

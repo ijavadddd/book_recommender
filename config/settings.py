@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # my apps
     'apps.account.apps.AccountConfig',
     'apps.book.apps.BookConfig',
+    'apps.review.apps.ReviewConfig',
     'apps.recommender.apps.RecommenderConfig',
 
     # third-party

@@ -6,8 +6,6 @@ from rest_framework.exceptions import AuthenticationFailed
 
 class CustomUserBackend(BaseBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
-        print('back')
-
         user = User.get_by_username(username)
         if user and user.password == password:
             return user
