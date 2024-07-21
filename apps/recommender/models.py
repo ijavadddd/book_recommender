@@ -32,7 +32,8 @@ class Recommendation:
     @classmethod
     def suggest_genre(cls, user_id):
         genres = cls.rated_genre_average(user_id)
-
+        if not genres:
+            return None
         genres_title = ", ".join("'{0}'".format(item["genre"]) for item in genres)
         # Create a CASE statement for custom sorting
         case_statement = ' '.join(
