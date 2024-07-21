@@ -22,4 +22,5 @@ urlpatterns = [
     path('api/account/', include('apps.account.api.urls')),
     path('api/book/', include('apps.book.api.urls')),
     path('api/review/', include('apps.review.api.urls')),
+    path('api/suggest/', include('apps.recommender.api.urls')),
 ]

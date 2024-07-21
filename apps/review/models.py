@@ -31,8 +31,8 @@ class Review:
     def create(value_dict: dict, user_id=None):
         columns = ", ".join(f"{str(key)}" for key in value_dict.keys())
         values = ", ".join(f"{str(value)}" for value in value_dict.values())
-        query = f"INSERT INTO reviews ({columns}) VALUES ({values}) ON CONFLICT DO NOTHING RETURNING *;"
-        query = f"""WITH inserted_review AS (
+        query = f"""
+                WITH inserted_review AS (
                     INSERT INTO reviews ({columns})
                     VALUES ({values})
                     ON CONFLICT DO NOTHING
@@ -41,17 +41,14 @@ class Review:
                 SELECT
                     b.*,      
                   b.id AS book_id,
-                    COALESCE(ir.rating, r.rating) AS rating  -- The rating from the inserted_review or existing review
+                  ir.rating AS rating 
                 FROM
                     books b
                 LEFT JOIN
-                    reviews r
-                    ON b.id = r.book_id AND r.user_id = {user_id}
-                LEFT JOIN
                     inserted_review ir
                     ON b.id = ir.book_id
-                ORDER BY
-                    b.title;"""
+                WHERE b.id = ir.book_id;
+                """
         with connection.cursor() as cursor:
             cursor.execute(query)
             instance = cursor.fetchone()
