@@ -2,7 +2,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from apps.review.api.serializers import ReviewSerializer, DeleteReviewBookSerializer
+from apps.review.api.serializers import ReviewSerializer, DeleteReviewBookSerializer, BookSerializer
 from apps.review.models import Review
 
 
@@ -25,8 +25,9 @@ class AddReviewAPIView(APIView):
             if not review:
                 add_review_data = Review.create({"book_id": validated_data['book_id'],
                                                  "user_id": request.user.id,
-                                                 "rating": validated_data['rating']})
-                serializer = self.serializer_class(data=add_review_data)
+                                                 "rating": validated_data['rating']}, request.user.id)
+
+                serializer = BookSerializer(data=add_review_data)
                 serializer.is_valid(raise_exception=True)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response({"message": "already submitted, try update or delete"},
@@ -59,7 +60,7 @@ class UpdateReviewAPIView(APIView):
                                                 {"book_id": validated_data['book_id'],
                                                  "user_id": request.user.id})
 
-                serializer = self.serializer_class(data=add_review_data)
+                serializer = BookSerializer(data=add_review_data)
                 serializer.is_valid(raise_exception=True)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response({"message": "no review found"}, status=status.HTTP_201_CREATED)

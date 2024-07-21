@@ -18,7 +18,7 @@ class BookListAPIView(APIView):
 
     def get(self, request):
         try:
-            data = Book.list()
+            data = Book.list(user_id=request.user.id)
             serializer = self.serializer_class(data=data, many=True)
             serializer.is_valid(raise_exception=True)
             return Response(serializer.data, status=status.HTTP_200_OK)

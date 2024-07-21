@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from apps.book.api.serializers import BookSerializer
 from apps.book.models import Book
-from django.db import connection
 
 
 class ReviewSerializer(serializers.Serializer):
@@ -9,7 +8,6 @@ class ReviewSerializer(serializers.Serializer):
     book_id = serializers.IntegerField(write_only=True)
     user_id = serializers.IntegerField(read_only=True)
     rating = serializers.IntegerField(max_value=5, min_value=1)
-    book = serializers.SerializerMethodField(read_only=True)
 
     def get_book(self, obj):
         book = Book.get_dict(obj['book_id'])

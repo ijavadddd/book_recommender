@@ -9,18 +9,25 @@ class Book:
         self.genre = genre
 
     @staticmethod
-    def get_dict(book_id):
+    def get_dict(id):
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM books WHERE id = %s", [book_id])
+            cursor.execute("SELECT * FROM books WHERE id = %s", [id])
             row = cursor.fetchone()
             return {'id': row[0], 'title': row[1], 'author': row[2], 'genre': row[3]}
 
     @staticmethod
-    def list(condition: dict = None):
+    def list(condition: dict = "", user_id=None):
         if condition:
-            condition = " WHERE " + " AND ".join(f"{str(key)} LIKE '{item[0]}'" for key, item in condition.items())
-        query = f"SELECT * FROM books {condition} ORDER BY title;"
 
+            condition = " WHERE " + " AND ".join(f"{str(key)} LIKE '{item[0]}'" for key, item in condition.items())
+        query = f"""
+            SELECT b.*, r.rating FROM books b
+            LEFT JOIN
+                reviews r
+                ON b.id = r.book_id AND r.user_id = {user_id}
+            {condition}
+            ORDER BY title;
+            """
         with connection.cursor() as cursor:
             cursor.execute(query)
             rows = cursor.fetchall()
