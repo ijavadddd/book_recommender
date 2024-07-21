@@ -16,7 +16,7 @@ class Book:
             return {"id": row[0], "title": row[1], "author": row[2], "genre": row[3]}
 
     @staticmethod
-    def list(condition: dict = "", user_id=None):
+    def list(condition: dict | str = "", user_id=None):
         if condition:
 
             condition = " WHERE " + " AND ".join(
@@ -30,6 +30,7 @@ class Book:
             {condition}
             ORDER BY title;
             """
+        print(query)
         with connection.cursor() as cursor:
             cursor.execute(query)
             rows = cursor.fetchall()

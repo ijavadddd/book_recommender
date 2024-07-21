@@ -26,7 +26,7 @@ schema_view = get_schema_view(
     openapi.Info(
         title="PLEASE HIRE ME :)",
         default_version="v1",
-        description="API documentation for Sharif Task",
+        description="API documentation for Sharif Task - Javad Ghasemi",
         contact=openapi.Contact(email="ijavadd.dev@gmail.com"),
     ),
     public=True,

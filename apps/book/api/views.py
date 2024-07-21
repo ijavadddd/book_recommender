@@ -3,7 +3,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from apps.book.api.serializers import BookSerializer
-from django.db import connection
 from apps.utils import StandardPagination
 from apps.book.models import Book
 
@@ -41,7 +40,7 @@ class FilterBookListAPIView(APIView):
 
     def get(self, request):
         try:
-            data = Book.list(dict(request.GET))
+            data = Book.list(dict(request.GET), request.user.id)
             serializer = self.serializer_class(data=data, many=True)
             serializer.is_valid(raise_exception=True)
             return Response(serializer.data, status=status.HTTP_200_OK)

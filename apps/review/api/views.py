@@ -8,6 +8,7 @@ from apps.review.api.serializers import (
     BookSerializer,
 )
 from apps.review.models import Review
+from drf_yasg.utils import swagger_auto_schema
 
 
 class AddReviewAPIView(APIView):
@@ -18,6 +19,7 @@ class AddReviewAPIView(APIView):
     serializer_class = ReviewSerializer
     permission_classes = [IsAuthenticated]
 
+    @swagger_auto_schema(request_body=ReviewSerializer)
     def post(self, request):
         try:
             serializer = self.serializer_class(data=request.data)
@@ -62,6 +64,7 @@ class UpdateReviewAPIView(APIView):
     serializer_class = ReviewSerializer
     permission_classes = [IsAuthenticated]
 
+    @swagger_auto_schema(request_body=ReviewSerializer)
     def post(self, request):
         try:
             serializer = self.serializer_class(data=request.data)
@@ -101,6 +104,7 @@ class DeleteReviewAPIView(APIView):
     serializer_class = DeleteReviewBookSerializer
     permission_classes = [IsAuthenticated]
 
+    @swagger_auto_schema(request_body=DeleteReviewBookSerializer)
     def post(self, request):
         try:
             serializer = self.serializer_class(data=request.data)
