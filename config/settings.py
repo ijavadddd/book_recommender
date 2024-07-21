@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "apps.recommender.apps.RecommenderConfig",
     # third-party
     "rest_framework",
+    "drf_yasg",
 ]
 
 MIDDLEWARE = [
