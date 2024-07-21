@@ -19,7 +19,9 @@ class Review:
 
     @staticmethod
     def count(condition_dict: dict):
-        condition = " WHERE " + " AND ".join(f"{str(key)} = {str(item)}" for key, item in condition_dict.items())
+        condition = " WHERE " + " AND ".join(
+            f"{str(key)} = {str(item)}" for key, item in condition_dict.items()
+        )
         query = f"SELECT COUNT(*) FROM reviews {condition};"
 
         with connection.cursor() as cursor:
@@ -58,8 +60,12 @@ class Review:
 
     @staticmethod
     def update(update_dict, condition_dict: dict):
-        condition = " WHERE " + " AND ".join(f"{str(key)} = {str(item)}" for key, item in condition_dict.items())
-        values = " AND ".join(f"{str(key)} = {str(item)}" for key, item in update_dict.items())
+        condition = " WHERE " + " AND ".join(
+            f"{str(key)} = {str(item)}" for key, item in condition_dict.items()
+        )
+        values = " AND ".join(
+            f"{str(key)} = {str(item)}" for key, item in update_dict.items()
+        )
         query = f"UPDATE reviews SET {values} {condition} RETURNING *;"
 
         with connection.cursor() as cursor:
@@ -72,7 +78,9 @@ class Review:
     @staticmethod
     def delete(condition_dict: dict):
         try:
-            condition = " WHERE " + " AND ".join(f"{str(key)} = {str(item)}" for key, item in condition_dict.items())
+            condition = " WHERE " + " AND ".join(
+                f"{str(key)} = {str(item)}" for key, item in condition_dict.items()
+            )
             query = f"DELETE FROM reviews {condition};"
 
             with connection.cursor() as cursor:

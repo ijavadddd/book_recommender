@@ -13,13 +13,15 @@ class Book:
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM books WHERE id = %s", [id])
             row = cursor.fetchone()
-            return {'id': row[0], 'title': row[1], 'author': row[2], 'genre': row[3]}
+            return {"id": row[0], "title": row[1], "author": row[2], "genre": row[3]}
 
     @staticmethod
     def list(condition: dict = "", user_id=None):
         if condition:
 
-            condition = " WHERE " + " AND ".join(f"{str(key)} LIKE '{item[0]}'" for key, item in condition.items())
+            condition = " WHERE " + " AND ".join(
+                f"{str(key)} LIKE '{item[0]}'" for key, item in condition.items()
+            )
         query = f"""
             SELECT b.*, r.rating FROM books b
             LEFT JOIN

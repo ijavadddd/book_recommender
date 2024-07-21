@@ -10,7 +10,7 @@ class ReviewSerializer(serializers.Serializer):
     rating = serializers.IntegerField(max_value=5, min_value=1)
 
     def get_book(self, obj):
-        book = Book.get_dict(obj['book_id'])
+        book = Book.get_dict(obj["book_id"])
         serializer_instance = BookSerializer(data=book)
         serializer_instance.is_valid(raise_exception=True)
         return serializer_instance.data

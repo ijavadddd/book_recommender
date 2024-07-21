@@ -18,9 +18,9 @@ class CustomUserBackend(BaseBackend):
 class CustomAuthentication(BaseAuthentication):
     def authenticate(self, request):
         try:
-            session_user = request.session['user']
-            user = User.get(session_user['id'])
-            if session_user['key'] == hash(user):
+            session_user = request.session["user"]
+            user = User.get(session_user["id"])
+            if session_user["key"] == hash(user):
                 user.is_authenticated = True
                 return (user, None)
 
@@ -29,4 +29,4 @@ class CustomAuthentication(BaseAuthentication):
             return None
 
     def authenticate_header(self, request):
-        return 'Bearer'
+        return "Bearer"

@@ -28,7 +28,7 @@ class User:
 
     def __hash__(self):
         combined = self.username + self.password
-        return int(sha256(combined.encode('utf-8')).hexdigest(), 16)
+        return int(sha256(combined.encode("utf-8")).hexdigest(), 16)
 
     def __str__(self):
         return self.username

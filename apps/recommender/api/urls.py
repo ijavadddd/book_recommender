@@ -1,7 +1,11 @@
 from django.urls import path
-from apps.recommender.api.views import GenreRecommenderAPIView
+from apps.recommender.api.views import (
+    GenreRecommenderAPIView,
+    UserBaseRecommenderAPIView,
+)
 
 
 urlpatterns = [
-    path('', GenreRecommenderAPIView.as_view(), name='suggest'),
+    path("", UserBaseRecommenderAPIView.as_view(), name="suggest"),
+    path("genre/", GenreRecommenderAPIView.as_view(), name="suggest_genre"),
 ]
